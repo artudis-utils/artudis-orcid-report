@@ -1,18 +1,13 @@
 project_name: artudis-orcid-report
 release:
   github:
-    owner: artudis-utils
     name: artudis-orcid-report
   name_template: '{{.Tag}}'
-brew:
-  commit_author:
-    name: goreleaserbot
-    email: goreleaser@carlosbecker.com
-  install: bin.install "artudis-orcid-report"
 builds:
 - goos:
   - linux
   - darwin
+  - windows
   goarch:
   - amd64
   - "386"
@@ -39,4 +34,4 @@ fpm:
 snapshot:
   name_template: SNAPSHOT-{{ .Commit }}
 checksum:
-  name_template: '{{ .ProjectName }}_{{ .Version }}_checksums.txt'
+  name_template: '{{ .ProjectName }}_{{ .Version }}_SHA256checksums.txt'
