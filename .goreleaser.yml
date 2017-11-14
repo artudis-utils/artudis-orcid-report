@@ -1,6 +1,7 @@
 project_name: artudis-orcid-report
 release:
   github:
+    owner: artudis-utils
     name: artudis-orcid-report
   name_template: '{{.Tag}}'
 builds:
