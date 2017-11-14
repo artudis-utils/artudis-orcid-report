@@ -10,8 +10,7 @@ import (
 	"path/filepath"
 )
 
-// Data about people from the Person-export.json files
-// fits into this cozy little struct
+// Person is a cozy little struct for storing data about people from the Person-export.json files
 type Person struct {
 	FamilyName string `json:"family_name"`
 	GivenName  string `json:"given_name"`
@@ -22,7 +21,7 @@ type Person struct {
 	} `json:"identifier"`
 }
 
-// Is this particular identifier new? Has it been processed yet?
+// IdInfo stores if an identifier is new, and if it has been processed yet.
 type IdInfo struct {
 	Processed bool
 	New       bool

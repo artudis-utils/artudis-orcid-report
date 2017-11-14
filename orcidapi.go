@@ -8,14 +8,14 @@ import (
 	"net/url"
 )
 
-// A token returned to us from the ORCID API. Used for authentication.
+// AccessToken is returned to us from the ORCID API. Used for authentication.
 type AccessToken struct {
 	AccessToken string `json:"access_token"`
 	TokenType   string `json:"token_type"`
 	Scope       string `json:"scope"`
 }
 
-// Returned from the ORCID API when we do a /search call.
+// ORCIDSearchResponse stores data from the ORCID API when we do a /search call.
 type ORCIDSearchResponse struct {
 	Result []struct {
 		OrcidIdentifier struct {
@@ -27,7 +27,7 @@ type ORCIDSearchResponse struct {
 	NumFound int `json:"num-found"`
 }
 
-// Returned from the ORCID API when we do a /[id]/external-identifiers call.
+// ORCIDExternalIdentifierResult stores data from the ORCID API when we do a /[id]/external-identifiers call.
 type ORCIDExternalIdentifierResult struct {
 	LastModifiedDate struct {
 		Value int64 `json:"value"`
