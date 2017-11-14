@@ -10,6 +10,8 @@ import (
 	"path/filepath"
 )
 
+// Data about people from the Person-export.json files
+// fits into this cozy little struct
 type Person struct {
 	FamilyName string `json:"family_name"`
 	GivenName  string `json:"given_name"`
@@ -20,6 +22,7 @@ type Person struct {
 	} `json:"identifier"`
 }
 
+// Is this particular identifier new? Has it been processed yet?
 type IdInfo struct {
 	Processed bool
 	New       bool
@@ -40,9 +43,9 @@ func findFilesToProcess() []string {
 			log.Fatalln("Error finding matching files. ", err)
 		}
 		return matches
-	} else {
-		return flag.Args()
 	}
+
+	return flag.Args()
 }
 
 func processFile(filename, token string) {
@@ -107,6 +110,10 @@ func processPerson(person Person, token string) {
 		}
 	}
 
+	printOutput(person, orcids, scopusIDs)
+}
+
+func printOutput(person Person, orcids, scopusIDs map[string]*IdInfo) {
 	printedPerson := false
 	printedOrcid := false
 	printedScopus := false

@@ -8,12 +8,14 @@ import (
 	"net/url"
 )
 
+// A token returned to us from the ORCID API. Used for authentication.
 type AccessToken struct {
 	AccessToken string `json:"access_token"`
 	TokenType   string `json:"token_type"`
 	Scope       string `json:"scope"`
 }
 
+// Returned from the ORCID API when we do a /search call.
 type ORCIDSearchResponse struct {
 	Result []struct {
 		OrcidIdentifier struct {
@@ -25,6 +27,7 @@ type ORCIDSearchResponse struct {
 	NumFound int `json:"num-found"`
 }
 
+// Returned from the ORCID API when we do a /[id]/external-identifiers call.
 type ORCIDExternalIdentifierResult struct {
 	LastModifiedDate struct {
 		Value int64 `json:"value"`
@@ -81,7 +84,7 @@ func getORCIDSearchToken() string {
 		if err != nil {
 			log.Fatalln(err)
 		}
-		log.Fatalf("%s, %s", resp.StatusCode, bodyBytes)
+		log.Fatalf("%v, %s", resp.StatusCode, bodyBytes)
 	}
 
 	var token AccessToken
@@ -116,7 +119,7 @@ func findORCIDsFromAPIUsingScopus(orcids map[string]*IdInfo, scopusID, token str
 
 	if resp.StatusCode != http.StatusOK {
 		log.Println("Bad HTTP status from API.")
-		log.Fatalf("%s, %s", resp.StatusCode, bodyBytes)
+		log.Fatalf("%v, %s", resp.StatusCode, bodyBytes)
 	}
 
 	var response ORCIDSearchResponse
@@ -158,7 +161,7 @@ func findScopusIDsFromAPIUsingORCID(scopusIDs map[string]*IdInfo, orcid, token s
 
 	if resp.StatusCode != http.StatusOK {
 		log.Println("Bad HTTP status from API.")
-		log.Fatalf("%s, %s", resp.StatusCode, bodyBytes)
+		log.Fatalf("%v, %s", resp.StatusCode, bodyBytes)
 	}
 
 	var response ORCIDExternalIdentifierResult
