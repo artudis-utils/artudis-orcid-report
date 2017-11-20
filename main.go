@@ -21,8 +21,8 @@ type Person struct {
 	} `json:"identifier"`
 }
 
-// IdInfo stores if an identifier is new, and if it has been processed yet.
-type IdInfo struct {
+// IDInfo stores if an identifier is new, and if it has been processed yet.
+type IDInfo struct {
 	Processed bool
 	New       bool
 }
@@ -77,14 +77,14 @@ func processFile(filename, token string) {
 
 func processPerson(person Person, token string) {
 
-	orcids := map[string]*IdInfo{}
-	scopusIDs := map[string]*IdInfo{}
+	orcids := map[string]*IDInfo{}
+	scopusIDs := map[string]*IDInfo{}
 
 	for _, identifier := range person.Identifier {
 		if identifier.Scheme == "orcid" {
-			orcids[identifier.Value] = &IdInfo{Processed: false, New: false}
+			orcids[identifier.Value] = &IDInfo{Processed: false, New: false}
 		} else if identifier.Scheme == "scopus" {
-			scopusIDs[identifier.Value] = &IdInfo{Processed: false, New: false}
+			scopusIDs[identifier.Value] = &IDInfo{Processed: false, New: false}
 		}
 	}
 
@@ -112,7 +112,7 @@ func processPerson(person Person, token string) {
 	printOutput(person, orcids, scopusIDs)
 }
 
-func printOutput(person Person, orcids, scopusIDs map[string]*IdInfo) {
+func printOutput(person Person, orcids, scopusIDs map[string]*IDInfo) {
 	printedPerson := false
 	printedOrcid := false
 	printedScopus := false

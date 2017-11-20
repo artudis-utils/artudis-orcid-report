@@ -101,7 +101,7 @@ func getORCIDSearchToken() string {
 	return token.AccessToken
 }
 
-func findORCIDsFromAPIUsingScopus(orcids map[string]*IdInfo, scopusID, token string) {
+func findORCIDsFromAPIUsingScopus(orcids map[string]*IDInfo, scopusID, token string) {
 
 	request, err := http.NewRequest("GET", ORCIDAPIURL+"search/?q=external-id-reference:"+scopusID, nil)
 	if err != nil {
@@ -136,14 +136,14 @@ func findORCIDsFromAPIUsingScopus(orcids map[string]*IdInfo, scopusID, token str
 	for _, result := range response.Result {
 		if result.OrcidIdentifier.Host == "orcid.org" {
 			if _, exists := orcids[result.OrcidIdentifier.Path]; !exists {
-				orcids[result.OrcidIdentifier.Path] = &IdInfo{Processed: false, New: true}
+				orcids[result.OrcidIdentifier.Path] = &IDInfo{Processed: false, New: true}
 			}
 		}
 	}
 
 }
 
-func findScopusIDsFromAPIUsingORCID(scopusIDs map[string]*IdInfo, orcid, token string) {
+func findScopusIDsFromAPIUsingORCID(scopusIDs map[string]*IDInfo, orcid, token string) {
 
 	request, err := http.NewRequest("GET", ORCIDAPIURL+orcid+"/external-identifiers", nil)
 	if err != nil {
@@ -178,7 +178,7 @@ func findScopusIDsFromAPIUsingORCID(scopusIDs map[string]*IdInfo, orcid, token s
 	for _, externalIdentifier := range response.ExternalIdentifier {
 		if externalIdentifier.ExternalIDType == "Scopus Author ID" {
 			if _, exists := scopusIDs[externalIdentifier.ExternalIDValue]; !exists {
-				scopusIDs[externalIdentifier.ExternalIDValue] = &IdInfo{Processed: false, New: true}
+				scopusIDs[externalIdentifier.ExternalIDValue] = &IDInfo{Processed: false, New: true}
 			}
 		}
 	}
