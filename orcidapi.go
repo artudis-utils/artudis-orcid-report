@@ -8,6 +8,10 @@ import (
 	"net/url"
 )
 
+// ORCIDAPIURL is the string containing the scheme, host, and API version path for the
+// ORCID API we want to use.
+const ORCIDAPIURL string = "https://pub.orcid.org/v2.1/"
+
 // AccessToken is returned to us from the ORCID API. Used for authentication.
 type AccessToken struct {
 	AccessToken string `json:"access_token"`
@@ -99,7 +103,7 @@ func getORCIDSearchToken() string {
 
 func findORCIDsFromAPIUsingScopus(orcids map[string]*IdInfo, scopusID, token string) {
 
-	request, err := http.NewRequest("GET", "https://pub.orcid.org/v2.0/search/?q=external-id-reference:"+scopusID, nil)
+	request, err := http.NewRequest("GET", ORCIDAPIURL+"search/?q=external-id-reference:"+scopusID, nil)
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -141,7 +145,7 @@ func findORCIDsFromAPIUsingScopus(orcids map[string]*IdInfo, scopusID, token str
 
 func findScopusIDsFromAPIUsingORCID(scopusIDs map[string]*IdInfo, orcid, token string) {
 
-	request, err := http.NewRequest("GET", "https://pub.orcid.org/v2.0/"+orcid+"/external-identifiers", nil)
+	request, err := http.NewRequest("GET", ORCIDAPIURL+orcid+"/external-identifiers", nil)
 	if err != nil {
 		log.Fatal(err)
 	}
