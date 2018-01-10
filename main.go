@@ -56,6 +56,8 @@ func processFile(filename, token string) {
 	defer file.Close()
 
 	fileScanner := bufio.NewScanner(file)
+	buf := make([]byte, 0, 1024*1024)
+	fileScanner.Buffer(buf, 1024*1024*32)
 
 	counter := 0
 
@@ -72,6 +74,11 @@ func processFile(filename, token string) {
 		}
 
 		processPerson(person, token)
+	}
+
+	err = fileScanner.Err()
+	if err != nil {
+		log.Fatalln(err)
 	}
 }
 
