@@ -73,6 +73,8 @@ func processFile(filename, token string) {
 			log.Fatalln(err)
 		}
 
+		log.Printf("%v\n", person)
+
 		processPerson(person, token)
 	}
 

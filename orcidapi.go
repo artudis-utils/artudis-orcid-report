@@ -110,6 +110,8 @@ func findORCIDsFromAPIUsingScopus(orcids map[string]*IDInfo, scopusID, token str
 	request.Header.Set("Accept", "application/vnd.orcid+json")
 	request.Header.Set("Authorization", "Bearer "+token)
 
+	log.Println(request)
+
 	resp, err := http.DefaultClient.Do(request)
 	if err != nil {
 		log.Fatalln(err)
@@ -151,6 +153,8 @@ func findScopusIDsFromAPIUsingORCID(scopusIDs map[string]*IDInfo, orcid, token s
 	}
 	request.Header.Set("Accept", "application/vnd.orcid+json")
 	request.Header.Set("Authorization", "Bearer "+token)
+
+	log.Println(request)
 
 	resp, err := http.DefaultClient.Do(request)
 	if err != nil {
